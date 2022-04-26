@@ -4,4 +4,5 @@ yarn.lock
 package-lock.json
 public
 tsconfig.node.json
- 
+postcss.config.js
+tailwind.config.js
