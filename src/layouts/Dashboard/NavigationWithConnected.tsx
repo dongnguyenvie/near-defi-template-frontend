@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Flex,
   FlexProps,
   HStack,
@@ -14,19 +15,19 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faGasPump } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-interface NavigationProps extends FlexProps {
+interface NavigationWithConnectedProps extends FlexProps {
   onOpen: () => void
 }
 
-export const Navigation = ({ onOpen, ...rest }: NavigationProps) => {
+export const NavigationWithConnected = ({ onOpen, ...rest }: NavigationWithConnectedProps) => {
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
       px={{ base: 4, md: 4 }}
-      height="20"
+      height="16"
       alignItems="center"
       className="bg-white"
       // bg={useColorModeValue('white', 'gray.900')}
@@ -42,37 +43,38 @@ export const Navigation = ({ onOpen, ...rest }: NavigationProps) => {
         aria-label="open menu"
         icon={<FontAwesomeIcon icon={faBars} />}
       />
+      <Box className="px-2">
+        <Button
+          variant="solid"
+          colorScheme="pink"
+          bg="pink.400"
+          color="white"
+          size="md"
+          rounded="3xl"
+        >
+          Connect Wallet
+        </Button>
+      </Box>
 
-      <Text
-        display={{ base: 'flex', md: 'none' }}
-        fontSize="2xl"
-        fontFamily="monospace"
-        fontWeight="bold"
-      >
-        Logo
-      </Text>
+      <Box className="px-2">
+        <Button variant="solid" size="md" rounded="3xl">
+          <FontAwesomeIcon icon={faGasPump} />
+          <span className="ml-1">64</span>
+        </Button>
+      </Box>
 
       <HStack spacing={{ base: '0', md: '6' }}>
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
               <HStack>
-                <Avatar
-                  size={'sm'}
-                  src={
-                    'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                  }
-                />
                 <VStack
                   display={{ base: 'none', md: 'flex' }}
                   alignItems="flex-start"
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">Justina Clark</Text>
-                  <Text fontSize="xs" color="gray.600">
-                    Admin
-                  </Text>
+                  <Text fontSize="sm">$ USD</Text>
                 </VStack>
               </HStack>
             </MenuButton>
@@ -80,11 +82,8 @@ export const Navigation = ({ onOpen, ...rest }: NavigationProps) => {
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}
             >
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
-              <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem>$USD</MenuItem>
+              <MenuItem>$VND</MenuItem>
             </MenuList>
           </Menu>
         </Flex>

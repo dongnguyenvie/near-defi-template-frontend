@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { ReactNode } from 'react'
 import { Navigation } from './Navigation'
+import { NavigationWithConnected } from './NavigationWithConnected'
 import { Sidebar } from './Sidebar'
 
 interface DashboardProps {
@@ -35,7 +36,8 @@ export const Dashboard = (props: DashboardProps) => {
           <Sidebar onClose={onClose} w={{ base: 'full', md: '100%' }} />
         </DrawerContent>
       </Drawer>
-      <Navigation onOpen={onOpen} />
+      {/* <Navigation onOpen={onOpen} /> */}
+      <NavigationWithConnected onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
       </Box>
