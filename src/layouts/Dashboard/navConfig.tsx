@@ -46,16 +46,16 @@ export const navDashboard2 = [
   {
     title: 'DAO',
     icon: <FontAwesomeIcon icon={faStoreSlash} />,
-    path: '/markets',
+    path: '/DAO',
   },
   {
     title: 'Bridges',
     icon: <FontAwesomeIcon icon={faStoreSlash} />,
-    path: '/markets',
+    path: '/Bridges',
   },
   {
     title: 'NFT Gallery',
     icon: <FontAwesomeIcon icon={faStoreSlash} />,
-    path: '/markets',
+    path: '/nft-market',
   },
 ]

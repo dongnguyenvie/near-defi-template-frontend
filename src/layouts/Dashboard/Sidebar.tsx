@@ -3,6 +3,7 @@ import { navDashboard, navDashboard2 } from './navConfig'
 import { faEarth } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRoutes, useMatch, useLocation, Link } from 'react-router-dom'
+import { A } from '#components/A'
 
 interface SidebarProps extends BoxProps {
   onClose: () => void
@@ -39,10 +40,8 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
 
           return (
             <li key={idx}>
-              <Link
-                to={{
-                  pathname: item.path,
-                }}
+              <A
+                url={item.path}
                 className={`
                 relative flex flex-row items-center h-12 focus:outline-none  border-l-4 border-transparent hover:border-indigo-500 pr-6 mx-3 rounded-2xl
                 ${
@@ -54,7 +53,7 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
               >
                 <span className="inline-flex justify-center items-center ml-4">{item.icon}</span>
                 <span className="ml-2 text-sm tracking-wide truncate">{item.title}</span>
-              </Link>
+              </A>
             </li>
           )
         })}
@@ -65,8 +64,8 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
           const isActive = false
           return (
             <li key={idx}>
-              <a
-                href="#"
+              <A
+                url={item.path}
                 className={`
                 relative flex flex-row items-center h-12 focus:outline-none  border-l-4 border-transparent hover:border-indigo-500 pr-6 mx-3 rounded-2xl
                 ${
@@ -78,7 +77,7 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
               >
                 <span className="inline-flex justify-center items-center ml-4">{item.icon}</span>
                 <span className="ml-2 text-sm tracking-wide truncate">{item.title}</span>
-              </a>
+              </A>
             </li>
           )
         })}
