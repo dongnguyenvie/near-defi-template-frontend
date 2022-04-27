@@ -2,11 +2,16 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 import alias from '@rollup/plugin-alias'
-
+import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
 const projectRootDir = resolve(__dirname)
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      buffer: 'buffer',
+    },
+  },
   plugins: [
     react(),
     alias({
@@ -17,8 +22,24 @@ export default defineConfig({
         { find: '#layouts', replacement: resolve(projectRootDir, '/src/layouts') },
         { find: '#assets', replacement: resolve(projectRootDir, '/src/assets') },
         { find: '#types', replacement: resolve(projectRootDir, '/src/types') },
+        { find: '#providers', replacement: resolve(projectRootDir, '/src/providers') },
       ],
     }),
   ],
+  optimizeDeps: {
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: 'globalThis',
+      },
+      // Enable esbuild polyfill plugins
+      plugins: [
+        GlobalsPolyfills({
+          process: true,
+          buffer: true,
+        }),
+      ],
+    },
+  },
   publicDir: 'public',
 })
