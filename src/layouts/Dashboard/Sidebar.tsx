@@ -2,12 +2,18 @@ import { Box, BoxProps } from '@chakra-ui/react'
 import { navDashboard, navDashboard2 } from './navConfig'
 import { faEarth } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useRoutes, useMatch, useLocation, Link } from 'react-router-dom'
 
 interface SidebarProps extends BoxProps {
   onClose: () => void
 }
 
 export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
+  const location = useLocation()
+
+  const isPathActive = (path: string) => {
+    return path === location.pathname
+  }
   return (
     <Box
       transition="3s ease"
@@ -29,11 +35,14 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
           </div>
         </li>
         {navDashboard.map((item, idx) => {
-          const isActive = idx === 0
+          const isActive = isPathActive(item.path)
+
           return (
             <li key={idx}>
-              <a
-                href="#"
+              <Link
+                to={{
+                  pathname: item.path,
+                }}
                 className={`
                 relative flex flex-row items-center h-12 focus:outline-none  border-l-4 border-transparent hover:border-indigo-500 pr-6 mx-3 rounded-2xl
                 ${
@@ -45,7 +54,7 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
               >
                 <span className="inline-flex justify-center items-center ml-4">{item.icon}</span>
                 <span className="ml-2 text-sm tracking-wide truncate">{item.title}</span>
-              </a>
+              </Link>
             </li>
           )
         })}

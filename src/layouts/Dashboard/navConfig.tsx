@@ -18,27 +18,27 @@ export const navDashboard = [
   {
     title: 'My Assets',
     icon: <FontAwesomeIcon icon={faWallet} />,
-    path: '/markets',
+    path: '/dashboard',
   },
   {
     title: 'Deposit/Withdraw',
     icon: <FontAwesomeIcon icon={faPiggyBank} />,
-    path: '/markets',
+    path: '/access',
   },
   {
     title: 'Borrow/Repay',
     icon: <FontAwesomeIcon icon={faHandHoldingDollar} />,
-    path: '/markets',
+    path: '/borrow',
   },
   {
     title: 'History',
     icon: <FontAwesomeIcon icon={faMemory} />,
-    path: '/markets',
+    path: '/records',
   },
   {
     title: 'FAQ',
     icon: <FontAwesomeIcon icon={faQuestionCircle} />,
-    path: '/markets',
+    path: '/faq',
   },
 ]
 
