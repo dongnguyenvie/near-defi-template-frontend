@@ -3,6 +3,9 @@ import 'regenerator-runtime/runtime'
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react'
 import * as nearAPI from 'near-api-js'
 import { ConnectConfig, Near, WalletConnection } from 'near-api-js'
+import { IDefiSmartcontract } from '#types/near'
+
+export const defiContractName = import.meta.env.VITE_DEFI_SMARTCONTRACT
 
 const nearConfig: ConnectConfig = {
   networkId: 'testnet',
@@ -22,6 +25,18 @@ const initNear = async () =>
     )
   )
 const initWallet = (near: Near) => new nearAPI.WalletConnection(near, null)
+
+const initDefiContract = (wallet: WalletConnection): IDefiSmartcontract =>
+  new nearAPI.Contract(wallet.account(), defiContractName, {
+    viewMethods: [
+      'get_assets_paged',
+      'get_assets_paged_detailed',
+      'get_asset',
+      'ft_metadata',
+      'get_account',
+    ],
+    changeMethods: ['storage_deposit', 'ft_transfer', 'ft_transfer_call'],
+  }) as IDefiSmartcontract
 
 interface INearContext {
   walletReady: boolean
