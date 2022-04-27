@@ -28,8 +28,6 @@ export default function Layout({ variant = 'main', children, ...otherProps }: La
 export const LayoutProvider = (props: any) => {
   const [variant, setVariant] = useState(initCtxt.variant)
 
-  console.log('xxx', variant)
-
   return (
     <LayoutContext.Provider value={{ variant, onChangeVariant: setVariant }}>
       <Layout {...props} variant={variant} />
