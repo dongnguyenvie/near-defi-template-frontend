@@ -64,20 +64,20 @@ function NearProvider({ children }: NearProviderProps) {
 
   const connectWallet = async () => {
     if (!near) return
-    setNearLoading(false)
+    setWalletLoading(false)
     try {
       const wallet = await initWallet(near)
       setWallet(wallet)
     } catch (error) {
       console.log('connectWallet::', error)
     }
-    setNearLoading(true)
+    setWalletLoading(true)
   }
 
   const signIn = () => {
     if (!walletReady) return
     wallet!.requestSignIn(
-      'nolannguyen.testnet', // contract requesting access
+      'price-oracle.lam-test50.testnet', // contract requesting access
       'Nearlend Nolan App', // optional
       'http://localhost:3000/markets?flg=success', // optional
       'http://localhost:3000/markets?flg=failure'
