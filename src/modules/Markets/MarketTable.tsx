@@ -1,15 +1,30 @@
 import { Supplied, TokenConfig } from '#types/defiContract'
-import { cashFormatter } from '#utils/formatter'
-import { Button } from '@chakra-ui/react'
+import { cashFormatter, percentFormatter } from '#utils/formatter'
+import { Button, Image } from '@chakra-ui/react'
 
 const HEADERS = [
-  'Asset',
-  'Deposit Market($)',
-  'Deposit Total APY',
-  'Borrow Market($)',
-  'Borrow Total APY',
-  'Liquidity($)',
-  'Action',
+  {
+    name: 'Asset',
+    className: 'text-left',
+  },
+  {
+    name: 'Deposit Market($)',
+  },
+  {
+    name: 'Deposit Total APY',
+  },
+  {
+    name: 'Borrow Market($)',
+  },
+  {
+    name: 'Borrow Total APY',
+  },
+  {
+    name: 'Liquidity($)',
+  },
+  {
+    name: 'Action',
+  },
 ]
 interface Assets {
   id: string
@@ -26,6 +41,8 @@ interface Assets {
   reserved: string
   last_update_timestamp: string
   config: TokenConfig
+  borrowAPY: number
+  supplyAPY: number
 }
 
 interface MarketTableProps {
@@ -38,8 +55,8 @@ export function MarketTable({ assets }: MarketTableProps) {
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             {HEADERS.map((header, index) => (
-              <th key={index} scope="col" className="px-6 py-3">
-                {header}
+              <th key={index} scope="col" className={`px-6 py-3 ${header.className}`}>
+                {header.name}
               </th>
             ))}
           </tr>
@@ -48,13 +65,16 @@ export function MarketTable({ assets }: MarketTableProps) {
           {assets.map((item, index) => (
             <tr
               key={index}
-              className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700"
+              className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 hover:opacity-80"
             >
               <th
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap capitalize"
               >
-                {item.symbol}
+                <div className="flex items-center">
+                  <Image src={item.thumbnail} w="40px" />
+                  <span className="ml-1">{item.symbol}</span>
+                </div>
               </th>
               <td className="px-6 py-4 text-right">
                 <div>
@@ -64,13 +84,21 @@ export function MarketTable({ assets }: MarketTableProps) {
               </td>
               <td className="px-6 py-4">
                 <div>
+                  <span>{percentFormatter.format(item.supplyAPY)}</span>
+                </div>
+              </td>
+              <td className="px-6 py-4">
+                <div>
                   <span>{cashFormatter(item.totalBorrowed)}</span>
                   <p className="text-neutral-700">${cashFormatter(item.borrowedBalance)}</p>
                 </div>
               </td>
-              <td className="px-6 py-4">Borrow Market($)</td>
-              <td className="px-6 py-4">6.19% Borrow Total APY</td>
-              <td className="px-6 py-4">$ 4.868M Liquidity($)</td>
+              <td className="px-6 py-4">
+                <div>
+                  <span>{percentFormatter.format(item.borrowAPY)}</span>
+                </div>
+              </td>
+              <td className="px-6 py-4">$ 0x0x0xM</td>
               <td className="px-6 py-4 text-right">
                 <div className="flex justify-center">
                   <Button colorScheme="pink" size="xs">

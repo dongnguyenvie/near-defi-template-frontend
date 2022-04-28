@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo } from 'react'
-import { useLayout } from '#layouts/index'
-import { Box, Button, Center } from '@chakra-ui/react'
+import { useMemo } from 'react'
+import { Box } from '@chakra-ui/react'
 import { useQuery } from 'react-query'
 import { useNear } from '#providers/NearProvider'
 import { tokenConfig } from '#utils/token'
 import { MarketTable } from '#modules/Markets/MarketTable'
 import { balanceWithDecimalFormatter } from '#utils/formatter'
+import keyBy from 'lodash/keyBy'
 
 export default function Markets() {
   const { defiContract, oracleContract } = useNear()
@@ -19,6 +19,18 @@ export default function Markets() {
     }
   )
 
+  const { data: assetsAPYPagedData } = useQuery(
+    'defi.get_assets_paged_detailed',
+    () => contract.get_assets_paged_detailed({ from_index: 0, limit: 10 }),
+    {
+      enabled: ready,
+    }
+  )
+
+  const assetsAPYMap = useMemo(() => {
+    return keyBy(assetsAPYPagedData || [], 'token_id')
+  }, [assetsAPYPagedData])
+
   const assets = useMemo(() => {
     return (assetsPagedData || []).map((item) => {
       const [id, token] = item
@@ -29,6 +41,9 @@ export default function Markets() {
       const priceUsd = crytoPriceMap[config.nameUsd]?.price || 1
       const totalSupplied = suppliedBalance * priceUsd
       const totalBorrowed = borrowedBalance * priceUsd
+      const apyInfo = assetsAPYMap[id] || {}
+      const borrowAPY = (apyInfo.borrow_apy || 0) as number
+      const supplyAPY = (apyInfo.supply_apy || 0) as number
 
       return {
         ...token,
@@ -43,9 +58,11 @@ export default function Markets() {
         totalSupplied,
         totalBorrowed,
         priceUsd,
+        borrowAPY,
+        supplyAPY,
       }
     })
-  }, [assetsPagedData, crytoPriceMap])
+  }, [assetsPagedData, crytoPriceMap, assetsAPYMap])
 
   return (
     <>

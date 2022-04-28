@@ -10,14 +10,14 @@ export const tokenConfig = {
     nameUsd: 'aurora',
     name: 'aurora',
     symbol: 'Aurora',
-    thumbnail: 'public/assets/token/aurora.jpeg',
+    thumbnail: 'public/assets/token/aurora.png',
     decimals: 8,
   },
   'nearlendtest.testnet': {
     nameUsd: 'nearlend',
     name: 'nearlend',
     symbol: 'NEL',
-    thumbnail: 'public/assets/token/nel.jpeg',
+    thumbnail: 'public/assets/token/nel.png',
     decimals: 24,
   },
   'ref.fakes.testnet': {
@@ -32,7 +32,7 @@ export const tokenConfig = {
     nameUsd: 'ethereum',
     name: 'ethereum',
     symbol: 'WETH',
-    thumbnail: 'public/assets/token/weth.jpeg',
+    thumbnail: 'public/assets/token/weth.png',
     decimals: 18,
   },
   'dai.fakes.testnet': {
@@ -46,14 +46,14 @@ export const tokenConfig = {
     nameUsd: 'Tether USD',
     name: 'Tether USD',
     symbol: 'USDT',
-    thumbnail: 'public/assets/token/usdt.jpeg',
+    thumbnail: 'public/assets/token/usdt.png',
     decimals: 6,
   },
   'wrap.testnet': {
     nameUsd: 'Wrapped NEAR fungible token',
     name: 'Wrapped NEAR fungible token',
     symbol: 'wNEAR',
-    thumbnail: 'public/assets/token/near.jpeg',
+    thumbnail: 'public/assets/token/near.png',
     decimals: 24,
   },
 }
