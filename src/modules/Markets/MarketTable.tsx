@@ -73,7 +73,10 @@ export function MarketTable({ assets }: MarketTableProps) {
               >
                 <div className="flex items-center">
                   <Image src={item.thumbnail} w="40px" />
-                  <span className="ml-1">{item.symbol}</span>
+                  <div className="ml-1 flex flex-col justify-start text-left">
+                    <span className='text-xl'>{item.symbol}</span>
+                    <span className='text-xs text-gray-500'>{item.name}</span>
+                  </div>
                 </div>
               </th>
               <td className="px-6 py-4 text-right">
@@ -98,7 +101,7 @@ export function MarketTable({ assets }: MarketTableProps) {
                   <span>{percentFormatter.format(item.borrowAPY)}</span>
                 </div>
               </td>
-              <td className="px-6 py-4">$ 0x0x0xM</td>
+              <td className="px-6 py-4">$ ...</td>
               <td className="px-6 py-4 text-right">
                 <div className="flex justify-center">
                   <Button colorScheme="pink" size="xs">
