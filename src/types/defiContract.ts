@@ -1,19 +1,19 @@
 import { Contract } from 'near-api-js'
 
-export interface IDefiSmartcontract extends Contract {
-  get_assets_paged(payload: { from_index: number; limit: number }): Promise<ITokenEntries[]>
+export interface DefiContract extends Contract {
+  get_assets_paged(payload: { from_index: number; limit: number }): Promise<TokenEntries[]>
 }
 
-type ITokenEntries = [string, IToken]
-interface IToken {
+export type TokenEntries = [string, Token]
+export interface Token {
   supplied: Supplied
   borrowed: Supplied
   reserved: string
   last_update_timestamp: string
-  config: ITokenConfig
+  config: TokenConfig
 }
 
-interface ITokenConfig {
+export interface TokenConfig {
   reserve_ratio: number
   target_utilization: number
   target_utilization_rate: string
@@ -26,7 +26,7 @@ interface ITokenConfig {
   can_borrow: boolean
 }
 
-interface Supplied {
+export interface Supplied {
   shares: string
   balance: string
 }

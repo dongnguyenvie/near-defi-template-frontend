@@ -17,9 +17,11 @@
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@rollup/plugin-alias": "^3.1.9",
     "framer-motion": "^6.3.2",
+    "lodash": "^4.17.21",
     "near-api-js": "^0.44.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-query": "^3.38.0",
     "react-router-dom": "6"
   },
   "devDependencies": {

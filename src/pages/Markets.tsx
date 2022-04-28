@@ -1,17 +1,54 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useLayout } from '#layouts/index'
 import { Box, Button, Center } from '@chakra-ui/react'
+import { useQuery } from 'react-query'
+import { useNear } from '#providers/NearProvider'
+import { tokenConfig } from '#utils/token'
+import { MarketTable } from '#modules/Markets/MarketTable'
+import { balanceWithDecimalFormatter } from '#utils/formatter'
 
-const HEADERS = [
-  'Asset',
-  'Deposit Market($)',
-  'Deposit Total APY',
-  'Borrow Market($)',
-  'Borrow Total APY',
-  'Liquidity($)',
-  'Action',
-]
 export default function Markets() {
+  const { defiContract, oracleContract } = useNear()
+  const { contract, ready } = defiContract
+  const { crytoPriceMap } = oracleContract
+  const { data: assetsPagedData } = useQuery(
+    'defi.get_assets_paged',
+    () => contract.get_assets_paged({ from_index: 0, limit: 10 }),
+    {
+      enabled: ready,
+    }
+  )
+
+  const assets = useMemo(() => {
+    return (assetsPagedData || []).map((item) => {
+      const [id, token] = item
+      const config = tokenConfig[id as keyof typeof tokenConfig] || {}
+      const { name, symbol, nameUsd, thumbnail, decimals } = config
+      const suppliedBalance = balanceWithDecimalFormatter(token?.supplied.balance, decimals)
+      const borrowedBalance = balanceWithDecimalFormatter(token?.borrowed.balance, decimals)
+      const priceUsd = crytoPriceMap[config.nameUsd]?.price || 1
+      const totalSupplied = suppliedBalance * priceUsd
+      const totalBorrowed = borrowedBalance * priceUsd
+
+      return {
+        ...token,
+        id: id,
+        name,
+        symbol,
+        nameUsd,
+        thumbnail,
+        decimals,
+        suppliedBalance,
+        borrowedBalance,
+        totalSupplied,
+        totalBorrowed,
+        priceUsd,
+      }
+    })
+  }, [assetsPagedData, crytoPriceMap])
+
+  console.log({ assets })
+
   return (
     <>
       <div className="flex justify-around">
@@ -41,56 +78,8 @@ export default function Markets() {
             <input className="form-control block w-full  px-3 py-1.5     text-base   font-normal    text-gray-700   bg-white bg-clip-padding border border-solid border-gray-300 rounded  transition  ease-in-out   m-0   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
           </span>
         </div>
-        <MarkeTable />
+        <MarketTable assets={assets} />
       </div>
     </>
-  )
-}
-
-function MarkeTable() {
-  return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            {HEADERS.map((header, index) => (
-              <th key={index} scope="col" className="px-6 py-3">
-                {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {[1, 2, 3, 4, 5].map((item, idx) => (
-            <tr
-              key={idx}
-              className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700"
-            >
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
-              >
-                ETH
-              </th>
-              <td className="px-6 py-4">$ 10.016M</td>
-              <td className="px-6 py-4">3.16%</td>
-              <td className="px-6 py-4">$ 5.162M</td>
-              <td className="px-6 py-4">6.19%</td>
-              <td className="px-6 py-4">$ 4.868M</td>
-              <td className="px-6 py-4 text-right">
-                <div className='flex justify-center'>
-                  <Button colorScheme="pink" size="xs">
-                    Deposit
-                  </Button>
-                  <Button colorScheme="purple" size="xs" className='ml-1'>
-                    Borrow
-                  </Button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
   )
 }

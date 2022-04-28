@@ -3,9 +3,8 @@ import 'regenerator-runtime/runtime'
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react'
 import * as nearAPI from 'near-api-js'
 import { ConnectConfig, Near, WalletConnection } from 'near-api-js'
-import { IDefiSmartcontract } from '#types/near'
-
-export const defiContractName = import.meta.env.VITE_DEFI_SMARTCONTRACT
+import { useOracleContract } from './useOracleContract'
+import { useDefiContract } from './useDefiContract'
 
 const nearConfig: ConnectConfig = {
   networkId: 'testnet',
@@ -26,18 +25,6 @@ const initNear = async () =>
   )
 const initWallet = (near: Near) => new nearAPI.WalletConnection(near, null)
 
-const initDefiContract = (wallet: WalletConnection): IDefiSmartcontract =>
-  new nearAPI.Contract(wallet.account(), defiContractName, {
-    viewMethods: [
-      'get_assets_paged',
-      'get_assets_paged_detailed',
-      'get_asset',
-      'ft_metadata',
-      'get_account',
-    ],
-    changeMethods: ['storage_deposit', 'ft_transfer', 'ft_transfer_call'],
-  }) as IDefiSmartcontract
-
 interface INearContext {
   walletReady: boolean
   nearReady: boolean
@@ -46,6 +33,9 @@ interface INearContext {
   near: Near
   wallet: WalletConnection
   signIn: () => void
+  defiContract: ReturnType<typeof useDefiContract>
+  oracleContract: ReturnType<typeof useOracleContract>
+  ready: boolean
 }
 const NearContext = createContext<INearContext>({} as unknown as INearContext)
 type NearProviderProps = {
@@ -57,6 +47,9 @@ function NearProvider({ children }: NearProviderProps) {
   const [wallet, setWallet] = useState<WalletConnection>()
   const [nearLoading, setNearLoading] = useState(false)
   const [walletLoading, setWalletLoading] = useState(false)
+  // const [defiContract, setDefiContract] = useState<DefiContract>()
+  const oracleContract = useOracleContract({ wallet: wallet! })
+  const defiContract = useDefiContract({ wallet: wallet! })
 
   const nearReady = useMemo(() => {
     return !nearLoading && !!near
@@ -66,27 +59,31 @@ function NearProvider({ children }: NearProviderProps) {
     return !walletLoading && !!wallet
   }, [wallet, walletLoading])
 
+  const ready = useMemo(() => {
+    return walletReady && nearReady
+  }, [walletReady, nearReady])
+
   const connectNear = async () => {
-    setNearLoading(false)
+    setNearLoading(true)
     try {
       const near = await initNear()
       setNear(near)
     } catch (error) {
       console.log('connectNear::', error)
     }
-    setNearLoading(true)
+    setNearLoading(false)
   }
 
   const connectWallet = async () => {
     if (!near) return
-    setWalletLoading(false)
+    setWalletLoading(true)
     try {
       const wallet = await initWallet(near)
       setWallet(wallet)
     } catch (error) {
       console.log('connectWallet::', error)
     }
-    setWalletLoading(true)
+    setWalletLoading(false)
   }
 
   const signIn = () => {
@@ -117,6 +114,9 @@ function NearProvider({ children }: NearProviderProps) {
         near: near!,
         wallet: wallet!,
         signIn,
+        defiContract: defiContract!,
+        oracleContract: oracleContract!,
+        ready: ready,
       }}
     >
       {children}
