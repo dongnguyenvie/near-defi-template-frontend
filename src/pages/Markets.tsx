@@ -47,8 +47,6 @@ export default function Markets() {
     })
   }, [assetsPagedData, crytoPriceMap])
 
-  console.log({ assets })
-
   return (
     <>
       <div className="flex justify-around">

@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 import alias from '@rollup/plugin-alias'
-import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 const projectRootDir = resolve(__dirname)
 
 // https://vitejs.dev/config/
@@ -10,7 +10,11 @@ export default defineConfig({
   resolve: {
     alias: {
       buffer: 'buffer',
+      // 'near-api-js': resolve(__dirname, './node_modules/near-api-js/dist/near-api-js.min.js'),
     },
+  },
+  define: {
+    'process.env': process.env,
   },
   plugins: [
     react(),
@@ -35,9 +39,9 @@ export default defineConfig({
       },
       // Enable esbuild polyfill plugins
       plugins: [
-        GlobalsPolyfills({
-          process: true,
+        NodeGlobalsPolyfillPlugin({
           buffer: true,
+          process: true,
         }),
       ],
     },
