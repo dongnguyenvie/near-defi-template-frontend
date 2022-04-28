@@ -23,6 +23,7 @@ export default defineConfig({
         { find: '#assets', replacement: resolve(projectRootDir, '/src/assets') },
         { find: '#types', replacement: resolve(projectRootDir, '/src/types') },
         { find: '#providers', replacement: resolve(projectRootDir, '/src/providers') },
+        { find: '#modules', replacement: resolve(projectRootDir, '/src/modules') },
       ],
     }),
   ],
