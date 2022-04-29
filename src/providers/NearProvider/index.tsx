@@ -1,5 +1,3 @@
-import 'regenerator-runtime/runtime'
-
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react'
 import * as nearAPI from 'near-api-js'
 import { ConnectConfig, Near, WalletConnection } from 'near-api-js'
@@ -89,7 +87,7 @@ function NearProvider({ children }: NearProviderProps) {
   const signIn = () => {
     if (!walletReady) return
     wallet!.requestSignIn(
-      'price-oracle.lam-test50.testnet', // contract requesting access
+      'nolannguyen.testnet', // contract requesting access
       'Nearlend Nolan App', // optional
       'http://localhost:3000/markets?flg=success', // optional
       'http://localhost:3000/markets?flg=failure'
