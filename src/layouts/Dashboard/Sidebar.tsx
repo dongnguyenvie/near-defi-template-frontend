@@ -31,7 +31,7 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
               <span className="text-4xl">
                 <FontAwesomeIcon icon={faEarth} />
               </span>
-              <span className="ml-1">NearLend</span>
+              <span className="ml-1">Near API</span>
             </div>
           </div>
         </li>
