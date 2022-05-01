@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import svgr from '@honkhonk/vite-plugin-svgr'
 import { resolve } from 'path'
 import alias from '@rollup/plugin-alias'
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
@@ -17,6 +18,7 @@ export default defineConfig({
     'process.env': process.env,
   },
   plugins: [
+    svgr(),
     react(),
     alias({
       entries: [
