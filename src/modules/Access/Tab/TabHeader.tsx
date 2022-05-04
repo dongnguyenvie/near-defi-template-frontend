@@ -1,15 +1,18 @@
-import { Tab } from './Tab'
+import { ITabItem } from '../types'
+import { Tab } from './TabItem'
 
 export interface ITabHeaderProps {
   openTab: number
   setOpenTab: (openTab: number) => void
+  tabItems: ITabItem[]
 }
 
-export const TabHeader = ({ openTab, setOpenTab }: ITabHeaderProps) => {
+export const TabHeader = ({ tabItems, ...rest }: ITabHeaderProps) => {
   return (
-    <ul className="flex mb-3 list-none flex-wrap pt-3 pb-0 flex-row relative" role="tablist">
-      <Tab openTab={openTab} setOpenTab={setOpenTab} tabIndex={1} tabName="Deposit" key={1} />
-      <Tab openTab={openTab} setOpenTab={setOpenTab} tabIndex={2} tabName="Withdraw" key={2} />
+    <ul className="flex list-none flex-nowrap pb-0 flex-row relative" role="tablist">
+      {tabItems.map((tab, index) => (
+        <Tab {...rest} tab={tab} key={tab.key} />
+      ))}
     </ul>
   )
 }

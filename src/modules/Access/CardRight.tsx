@@ -19,8 +19,8 @@ export const CardRight = ({
   miningAPY,
 }: ICardRightProps) => {
   return (
-    <div className="bg-pink-500 relative rounded-3xl w-[344px] h-[497px]">
-      <div className="bg-white rounded-3xl absolute top mt-1 w-[344px] h-[497px] px-8 pt-10 pb-[22px]">
+    <div className="bg-pink-500 relative rounded-3xl w-full lg:w-[344px] h-[497px] mt-[64px]">
+      <div className="bg-white rounded-3xl absolute top mt-1 w-full lg:w-[344px] h-[497px] px-8 pt-10 pb-[22px]">
         <div className="flex items-stretch border-dotted border-b-2 pb-10">
           <div className="image mr-4">
             <img
@@ -36,7 +36,7 @@ export const CardRight = ({
                 <FontAwesomeIcon icon={faCircleInfo} />
               </span>
             </h3>
-            <h3 className="text-lg text-green-500 mt-[2px]">0%</h3>
+            <h3 className="text-lg text-green-500 mt-[2px]">{availableAmount}%</h3>
             <div className="w-full bg-gray-200 rounded-full h-1.5 bg-gray-300 relative">
               <div className="bg-pink-600 h-1.5 rounded-full w-[80%]"></div>
 
@@ -64,33 +64,33 @@ export const CardRight = ({
               (ETH) <FontAwesomeIcon icon={faCircleInfo} />
             </p>
           </div>
-          <div className="value text-lg text-black">0</div>
+          <div className="value text-lg text-black">{depositAmount}</div>
         </div>
         <div className="flex justify-between w-full h-[100px] items-center mt-2 border-dotted border-b-2">
           <div className="text-gray-400 text-sm">
             Available Amount <FontAwesomeIcon icon={faCircleInfo} />
           </div>
-          <div className="value">$ 0</div>
+          <div className="value">{availableAmount}</div>
         </div>
         <div className="h-[140px] flex items-center w-full">
           <div className="h-[94px] justify-between flex flex-col w-full">
             <div className="flex justify-between">
               <p className="text-gray-400">Deposit APY</p>
-              <p>2.98%</p>
+              <p>{depositAPY}</p>
             </div>
             <div className="flex justify-between">
               <p className="text-gray-400">Mining APY</p>
-              <p>2.98%</p>
+              <p>{miningAPY}</p>
             </div>
             <div className="flex justify-between">
               <p className="text-gray-400">Market Liquidity</p>
-              <p>1.685K</p>
+              <p>{marketLiquidity}</p>
             </div>
             <div className="flex justify-between">
               <p className="text-gray-400">
                 Maximum LTV Ratio <FontAwesomeIcon icon={faCircleInfo} />
               </p>
-              <p>2.98%</p>
+              <p>{maximumLTVRatio}</p>
             </div>
           </div>
         </div>

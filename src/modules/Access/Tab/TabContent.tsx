@@ -1,15 +1,24 @@
+
 interface ITabContentProps {
   openTab: number
+  children: any[]
 }
 
-export const TabContent = ({ openTab }: ITabContentProps) => {
+export const TabContent = ({ openTab, children }: ITabContentProps) => {
   return (
-    <div className="relative flex flex-col min-w-0 break-words bg-transparent w-full mb-6 rounded">
-      <div className="px-4 py-1 flex-auto">
-        <div className="tab-content tab-space">
-          <div className={openTab === 1 ? 'block' : 'hidden'} id="link1"></div>
-          <div className={openTab === 2 ? 'block' : 'hidden'} id="link2"></div>
-        </div>
+    <div className="relative flex flex-col min-w-0 break-words shadow-assetTab bg-white rounded-3xl rounded-tl-none w-full lg:w-[560px] h-[497px]">
+      <div className="px-4 py-1">
+        {children.map((Component, index) => {
+          return (
+            <div
+              className={openTab === index + 1 ? 'block' : 'hidden'}
+              id={`link-${index}`}
+              key={index}
+            >
+              {Component}
+            </div>
+          )
+        })}
       </div>
     </div>
   )
