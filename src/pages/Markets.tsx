@@ -5,7 +5,10 @@ import { useNear } from '#providers/NearProvider'
 import { tokenConfig } from '#utils/token'
 import { MarketTable } from '#modules/Markets/MarketTable'
 import { balanceWithDecimalFormatter } from '#utils/formatter'
+import { Title } from '#components/Title'
 import keyBy from 'lodash/keyBy'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function Markets() {
   const { defiContract, oracleContract } = useNear()
@@ -88,10 +91,13 @@ export default function Markets() {
       </div>
       <div className="mt-5">
         <div className="py-2 flex justify-between">
-          <span className="text-lg font-bold">Markets</span>
-          <span>
-            <input className="form-control block w-full  px-3 py-1.5     text-base   font-normal    text-gray-700   bg-white bg-clip-padding border border-solid border-gray-300 rounded  transition  ease-in-out   m-0   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          </span>
+          <Title title="Markets" />
+          <div className="w-[240px] h-[38px] relative">
+            <input className="w-full h-[38px] text-sm font-medium rounded-[10px] outline outline-2	hover:outline-pink-500 outline-gray-300 px-[30px]" />
+            <span className="absolute top-1/2 left-2 -translate-y-1/2">
+              <FontAwesomeIcon icon={faSearch} />
+            </span>
+          </div>
         </div>
         <MarketTable assets={assets} />
       </div>

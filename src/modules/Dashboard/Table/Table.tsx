@@ -28,7 +28,6 @@ export const Table = ({ columns, rows, name }: ITableProps) => {
             {columns.map(({ children, key, ...rest }) => {
               return (
                 <TableHeader key={key} {...rest}>
-                  {' '}
                   {children}
                 </TableHeader>
               )
