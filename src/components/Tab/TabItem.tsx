@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { ITabItem } from '../types'
+import { ITabItem } from '../../modules/Access/types'
 
 export interface ITabProps {
   openTab: number
@@ -9,12 +9,14 @@ export interface ITabProps {
 
 export const Tab = ({ openTab, tab, setOpenTab }: ITabProps) => {
   const tabIndex = tab.order
+
   const handleStyleTab = useMemo(() => {
     const classNameActivate = `bg-white text-black shadow-assetTab`
     const classNameInActivate = 'text-gray-400 bg-gray-200 hover:bg-pink-600 hover:text-white'
 
     return openTab === tabIndex ? classNameActivate : classNameInActivate
   }, [tabIndex, openTab])
+
   return (
     <li
       className={` rounded-t-3xl text-center ${handleStyleTab} w-[191px] h-[64px] flex items-center justify-center relative`}

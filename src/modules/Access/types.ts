@@ -3,3 +3,8 @@ export interface ITabItem {
   name: string
   order: number
 }
+export interface ITabCurrency {
+  name: string
+  image: string
+  apy: number
+}

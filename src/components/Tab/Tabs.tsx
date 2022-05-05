@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { ITabItem } from '../types'
+import { ITabItem } from '../../modules/Access/types'
 import { TabContent } from './TabContent'
 import { ITabHeaderProps, TabHeader } from './TabHeader'
 export interface ITabsProps {

@@ -1,4 +1,4 @@
-import { ITabItem } from '../types'
+import { ITabItem } from '../../modules/Access/types'
 import { Tab } from './TabItem'
 
 export interface ITabHeaderProps {
@@ -10,7 +10,7 @@ export interface ITabHeaderProps {
 export const TabHeader = ({ tabItems, ...rest }: ITabHeaderProps) => {
   return (
     <ul className="flex list-none flex-nowrap pb-0 flex-row relative" role="tablist">
-      {tabItems.map((tab, index) => (
+      {tabItems.map((tab) => (
         <Tab {...rest} tab={tab} key={tab.key} />
       ))}
     </ul>
