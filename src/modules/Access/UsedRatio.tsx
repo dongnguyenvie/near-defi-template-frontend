@@ -1,23 +1,25 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IUsedRatioProps } from './types'
 
-export interface ICardRightProps {
-  depositAmount: string
-  availableAmount: string
-  depositAPY: string
-  miningAPY: string
-  marketLiquidity: string | null
-  maximumLTVRatio: string
+const mockAPY = {
+  availableAmount: '0',
+  depositAPY: '2.98%',
+  depositAmount: '0',
+  marketLiquidity: '1.685K',
+  maximumLTVRatio: '80%',
+  miningAPY: '0.17%',
 }
+export const UsedRatio = () => {
+  const {
+    availableAmount,
+    depositAPY,
+    depositAmount,
+    marketLiquidity,
+    maximumLTVRatio,
+    miningAPY,
+  }: IUsedRatioProps = mockAPY
 
-export const CardRight = ({
-  availableAmount,
-  depositAPY,
-  depositAmount,
-  marketLiquidity,
-  maximumLTVRatio,
-  miningAPY,
-}: ICardRightProps) => {
   return (
     <div className="bg-pink-500 relative rounded-3xl w-full lg:w-[344px] h-[497px] mt-[64px]">
       <div className="bg-white rounded-3xl absolute top mt-1 w-full lg:w-[344px] h-[497px] px-8 pt-10 pb-[22px]">
@@ -37,9 +39,8 @@ export const CardRight = ({
               </span>
             </h3>
             <h3 className="text-lg text-green-500 mt-[2px]">{availableAmount}%</h3>
-            <div className="w-full bg-gray-200 rounded-full h-1.5 bg-gray-300 relative">
+            <div className="w-full rounded-full h-1.5 bg-gray-300 relative">
               <div className="bg-pink-600 h-1.5 rounded-full w-[80%]"></div>
-
               <div className="max absolute left-[80%] -top-2 -ml-1">
                 <div className="w-0 h-0 border-4 border-solid border-t-gray-800 border-l-transparent border-r-transparent border-b-transparent"></div>
               </div>
